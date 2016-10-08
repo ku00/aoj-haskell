@@ -2,7 +2,7 @@
 -- X Cubic
 
 -- "3"
--- => "27"
+-- "27"
 
 main = do
     x <- getLine

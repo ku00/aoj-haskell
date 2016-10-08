@@ -2,7 +2,7 @@
 -- Rectangle
 
 -- "3 5"
--- => "15 16"
+-- "15 16"
 
 main = do
     l <- getLine
