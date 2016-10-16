@@ -10,9 +10,10 @@
 -- "5 5"
 -- "a == b"
 
+import Control.Applicative
+
 main = do
-    l <- getLine
-    let (a:b:[]) = map read $ words l :: [Int]
+    [a, b] <- map read . words <$> getLine
     putStrLn $ a `compare'` b
 
 compare' :: Int -> Int -> String

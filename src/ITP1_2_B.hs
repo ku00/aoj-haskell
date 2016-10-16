@@ -7,9 +7,10 @@
 -- "3 8 1"
 -- "No"
 
+import Control.Applicative
+
 main = do
-    l <- getLine
-    let (a:b:c:[]) = map read $ words l :: [Int]
+    [a, b, c] <- map (read :: String -> Int) . words <$> getLine
     putStrLn $ if a < b && b < c
                  then "Yes"
                  else "No"

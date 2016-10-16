@@ -5,9 +5,8 @@
 -- "1 3 8"
 
 import qualified Data.List as List
+import Control.Applicative
 
 main = do
-    l <- getLine
-    let xs = map read $ words l :: [Int]
-        sxs = map show $ List.sort xs
-    putStrLn $ unwords sxs
+    xs <- map (read :: String -> Int) . words <$> getLine
+    putStrLn $ unwords . map show $ List.sort xs

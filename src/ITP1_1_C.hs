@@ -4,10 +4,11 @@
 -- "3 5"
 -- "15 16"
 
+import Control.Applicative
+
 main = do
-    l <- getLine
-    let (a:b:[]) = map read $ words l :: [Int]
-        x = area a b
+    [a, b] <- map read . words <$> getLine
+    let x = area a b
         y = circumference a b
     putStrLn $ show x ++ " " ++ show y
 

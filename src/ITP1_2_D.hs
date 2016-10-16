@@ -7,9 +7,10 @@
 -- "5 4 2 4 1"
 -- "No"
 
+import Control.Applicative
+
 main = do
-    l <- getLine
-    let (w:h:x:y:r:[]) = map read $ words l :: [Int]
+    [w, h, x, y, r] <- map (read :: String -> Int) . words <$> getLine
     putStrLn $ if overWidth w x r || overHeight h y r
                  then "No"
                  else "Yes"

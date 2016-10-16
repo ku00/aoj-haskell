@@ -4,9 +4,4 @@
 -- "3"
 -- "27"
 
-main = do
-    x <- getLine
-    print $ powerThree $ read x
-
-powerThree :: Int -> Int
-powerThree = (^3)
+main = getLine >>= print . (^3) . read
