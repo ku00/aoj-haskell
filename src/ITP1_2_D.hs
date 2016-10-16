@@ -1,11 +1,11 @@
 -- http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_2_D
 -- Circle in a Rectangle
 
--- "5 4 2 2 1"
--- "Yes"
+-- input:  5 4 2 2 1
+-- output: Yes
 
--- "5 4 2 4 1"
--- "No"
+-- input:  5 4 2 4 1
+-- output: No
 
 import Control.Applicative
 

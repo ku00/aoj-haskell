@@ -1,14 +1,14 @@
 -- http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_2_A
 -- Small, Large, or Equal
 
--- "1 2"
--- "a < b"
+-- input:  1 2
+-- output: a < b
 
--- "4 3"
--- "a > b"
+-- input:  4 3
+-- output: a > b
 
--- "5 5"
--- "a == b"
+-- input:  5 5
+-- output: a == b
 
 import Control.Applicative
 

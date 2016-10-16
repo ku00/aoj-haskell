@@ -1,11 +1,11 @@
 -- http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_2_B
 -- Range
 
--- "1 3 8"
--- "Yes"
+-- input:  1 3 8
+-- output: Yes
 
--- "3 8 1"
--- "No"
+-- input:  3 8 1
+-- output: No
 
 import Control.Applicative
 

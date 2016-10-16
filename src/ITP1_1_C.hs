@@ -1,8 +1,8 @@
 -- http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_C
 -- Rectangle
 
--- "3 5"
--- "15 16"
+-- input:  3 5
+-- output: 15 16
 
 import Control.Applicative
 

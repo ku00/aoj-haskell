@@ -1,8 +1,8 @@
 -- http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_D
 -- Watch
 
--- "46979"
--- "13:2:59"
+-- input:  46979
+-- output: 13:2:59
 
 main = do
     s <- getLine
