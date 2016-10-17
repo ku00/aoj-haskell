@@ -27,4 +27,4 @@ loopPutCase i = do
     x <- getLine
     Monad.when (read x /= 0) $ do
         putStrLn $ "Case " ++ show i ++ ": " ++ x
-        loop $ i + 1
+        loopPutCase $ i + 1
