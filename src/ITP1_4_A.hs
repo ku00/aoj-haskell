@@ -1,6 +1,9 @@
 -- http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_4_A
 -- A / B Problem
 
+-- input:  3 2
+-- output: 1 1 1.50000
+
 import Control.Applicative
 import Data.Fixed
 
