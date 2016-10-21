@@ -45,10 +45,10 @@ loop = do
 printFrame :: Int -> Int -> IO ()
 printFrame h w = do
     Monad.forM_ [1..h] $ \i -> do
-        putStrLn $ "#" ++ frameOrDot h w i ++ "#"
+        putStrLn $ frameOrDot h w i
     putStrLn ""
 
 frameOrDot :: Int -> Int -> Int -> String
 frameOrDot h w i = if (i == 1 || i == h)
-                     then concat . take (w-2) $ repeat "#"
-                     else concat . take (w-2) $ repeat "."
+                     then concat . take w $ repeat "#"
+                     else "#" ++ (concat . take (w-2) $ repeat ".") ++ "#"
