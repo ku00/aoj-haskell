@@ -9,9 +9,9 @@
 -- 1 17 37
 
 import Control.Applicative
-import qualified Data.Traversable as Traversable
+import qualified Control.Monad as Monad
 
 main = do
-    getLine  -- discard
+    getLine
     xs <- map (read :: String -> Int) . words <$> getLine
-    putStrLn $ unwords $ show <$> Traversable.sequenceA [minimum, maximum, sum] xs
+    putStrLn $ unwords $ show <$> Monad.sequence [minimum, maximum, sum] xs
