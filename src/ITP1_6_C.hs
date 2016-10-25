@@ -26,13 +26,20 @@
 
 import Control.Applicative
 import qualified Control.Monad as Monad
+import Control.Monad.State
 
 type Room = (Int, Int, Int, Int)
 
 -- main = do
 --     n <- read <$> getLine
 --     es <- toRoom . map (read :: String -> Int) . words <$> Monad.replicateM n getLine
---     mapM_ putStrLn $ es `entryStudent` officialHouse
+--     mapM_ putStrLn $ es `updateRoom` officialHouse
+
+-- getRoomInfo :: Int -> State [Room] ()
+-- getRoomInfo n = do
+--     Monad.forM_ [1..n] $ \_ -> do
+--         r <- toRoom . map (read :: String -> Int) . words <$> getLine
+--         putRooms r
 
 toRoom :: [Int] -> Room
 toRoom [b,f,r,v] = (b,f,r,v)
@@ -40,8 +47,13 @@ toRoom [b,f,r,v] = (b,f,r,v)
 officialHouse :: [Room]
 officialHouse = [ (b,f,r,0) | b <- [1..4], f <- [1..3], r <- [1..10] ]
 
-entryStudent :: Room -> [Room] -> [Room]
-entryStudent _ [] = []
-entryStudent room1@(a1,b1,c1,d1) (room2@(a2,b2,c2,d2):rs)
+-- putRooms :: Room -> State [Room] ()
+-- putRooms r = do
+--     rs <- get
+--     put $ newRooms rs r
+
+newRooms :: [Room] -> Room -> [Room]
+newRooms _ [] = []
+newRooms (room1@(a1,b1,c1,d1):rs) room2@(a2,b2,c2,d2)
     | (a1,b1,c1) == (a2,b2,c2) = (a1,b1,c1,(d1 + d2)) : rs
-    | otherwise                = room2 : room1 `entryStudent` rs
+    | otherwise                = room1 : newRooms rs room2
