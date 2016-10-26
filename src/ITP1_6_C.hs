@@ -32,8 +32,8 @@ type Room = (Int, Int, Int, Int)
 
 -- main = do
 --     n <- read <$> getLine
---     es <- toRoom . map (read :: String -> Int) . words <$> Monad.replicateM n getLine
---     mapM_ putStrLn $ es `updateRoom` officialHouse
+--     let oh = officialHouse :: State () [Room]
+--     print $ execState $ getRoomInfo n oh
 
 -- getRoomInfo :: Int -> State [Room] ()
 -- getRoomInfo n = do
@@ -47,13 +47,13 @@ toRoom [b,f,r,v] = (b,f,r,v)
 officialHouse :: [Room]
 officialHouse = [ (b,f,r,0) | b <- [1..4], f <- [1..3], r <- [1..10] ]
 
--- putRooms :: Room -> State [Room] ()
--- putRooms r = do
---     rs <- get
---     put $ newRooms rs r
+putRooms :: Room -> State [Room] ()
+putRooms r = do
+    rs <- get
+    put $ updateRooms rs r
 
-newRooms :: [Room] -> Room -> [Room]
-newRooms _ [] = []
-newRooms (room1@(a1,b1,c1,d1):rs) room2@(a2,b2,c2,d2)
+updateRooms :: [Room] -> Room -> [Room]
+updateRooms [] _ = []
+updateRooms (room1@(a1,b1,c1,d1):rs) room2@(a2,b2,c2,d2)
     | (a1,b1,c1) == (a2,b2,c2) = (a1,b1,c1,(d1 + d2)) : rs
-    | otherwise                = room1 : newRooms rs room2
+    | otherwise                = room1 : updateRooms rs room2
