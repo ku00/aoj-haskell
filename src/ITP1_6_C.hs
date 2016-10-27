@@ -26,34 +26,44 @@
 
 import Control.Applicative
 import qualified Control.Monad as Monad
-import Control.Monad.State
+import qualified Control.Monad.Trans as Trans
+import qualified Control.Monad.State as State
 
 type Room = (Int, Int, Int, Int)
 
--- main = do
---     n <- read <$> getLine
---     let oh = officialHouse :: State () [Room]
---     print $ execState $ getRoomInfo n oh
+main = do
+    n <- getLine
+    rs <- putRooms (read n)
+    print $ getValue <$> rs
 
--- getRoomInfo :: Int -> State [Room] ()
--- getRoomInfo n = do
---     Monad.forM_ [1..n] $ \_ -> do
---         r <- toRoom . map (read :: String -> Int) . words <$> getLine
---         putRooms r
+putRooms :: Int -> IO [Room]
+putRooms n = (`State.execStateT` officialHouse) $ do
+    Monad.forM_ [1..n] $ \_ -> do
+        room <- Trans.lift $ toRoom . map (read :: String -> Int) . words <$> getLine
+        State.modify (`updateRoom` room)
+
+limitBuilding :: Int
+limitBuilding = 4
+
+limitFloor :: Int
+limitFloor = 3
+
+limitRoom :: Int
+limitRoom = 10
+
+officialHouse :: [Room]
+officialHouse = [ (b,f,r,0) | b <- [1..limitBuilding],
+                              f <- [1..limitFloor],
+                              r <- [1..limitRoom] ]
 
 toRoom :: [Int] -> Room
 toRoom [b,f,r,v] = (b,f,r,v)
 
-officialHouse :: [Room]
-officialHouse = [ (b,f,r,0) | b <- [1..4], f <- [1..3], r <- [1..10] ]
+getValue :: Room -> Int
+getValue (_, _, _, v) = v
 
-putRooms :: Room -> State [Room] ()
-putRooms r = do
-    rs <- get
-    put $ updateRooms rs r
-
-updateRooms :: [Room] -> Room -> [Room]
-updateRooms [] _ = []
-updateRooms (room1@(a1,b1,c1,d1):rs) room2@(a2,b2,c2,d2)
-    | (a1,b1,c1) == (a2,b2,c2) = (a1,b1,c1,(d1 + d2)) : rs
-    | otherwise                = room1 : updateRooms rs room2
+updateRoom :: [Room] -> Room -> [Room]
+updateRoom [] _ = []
+updateRoom (room1@(b1,f1,r1,v1):rs) room2@(b2,f2,r2,v2)
+    | (b1,f1,r1) == (b2,f2,r2) = (b1,f1,r1,(v1 + v2)) : rs
+    | otherwise                = room1 : updateRoom rs room2
