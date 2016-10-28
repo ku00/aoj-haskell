@@ -25,16 +25,22 @@
 --  0 0 0 0 0 0 0 1 0 0
 
 import Control.Applicative
-import qualified Control.Monad as Monad
-import qualified Control.Monad.Trans as Trans
-import qualified Control.Monad.State as State
+import qualified Control.Monad as Monad (forM_)
+import qualified Control.Monad.Trans as Trans (lift)
+import qualified Control.Monad.State as State (execStateT, modify)
+import qualified Data.List.Split as Split (chunksOf)
 
 type Room = (Int, Int, Int, Int)
 
 main = do
     n <- getLine
     rs <- putRooms (read n)
-    print $ getValue <$> rs
+    let rs' = Split.chunksOf limitRoom $ zipWith (++) (repeat " ") (show . getValue <$> rs)
+    Monad.forM_ [1..(limitBuilding*limitFloor)] $ \bf -> do
+        putStrLn $ concat $ rs' !! (bf-1)
+        if ((bf `mod` limitFloor == 0) && bf /= (limitBuilding*limitFloor))
+            then putStrLn "####################"
+            else return ()
 
 putRooms :: Int -> IO [Room]
 putRooms n = (`State.execStateT` officialHouse) $ do
@@ -42,14 +48,9 @@ putRooms n = (`State.execStateT` officialHouse) $ do
         room <- Trans.lift $ toRoom . map (read :: String -> Int) . words <$> getLine
         State.modify (`updateRoom` room)
 
-limitBuilding :: Int
 limitBuilding = 4
-
-limitFloor :: Int
-limitFloor = 3
-
-limitRoom :: Int
-limitRoom = 10
+limitFloor    = 3
+limitRoom     = 10
 
 officialHouse :: [Room]
 officialHouse = [ (b,f,r,0) | b <- [1..limitBuilding],
