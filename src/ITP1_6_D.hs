@@ -16,7 +16,7 @@
 -- 6
 -- 9
 
-import Control.Applicative
+import Control.Applicative ((<$>))
 import qualified Control.Monad as Monad (forM, forM_, replicateM)
 
 type Vector = [Int]

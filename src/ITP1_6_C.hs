@@ -24,7 +24,7 @@
 --  0 0 0 0 0 0 0 0 0 0
 --  0 0 0 0 0 0 0 1 0 0
 
-import Control.Applicative
+import Control.Applicative ((<$>))
 import qualified Control.Monad as Monad (forM_)
 import qualified Control.Monad.Trans as Trans (lift)
 import qualified Control.Monad.State as State (execStateT, modify)
