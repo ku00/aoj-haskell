@@ -15,20 +15,19 @@
 -- output2:
 -- No
 
-import Data.List
+import qualified Data.List as List
 
-pick' :: [Int] -> String -> String
-pick' [] _ = []
-pick' (n:ns) xs = xs !! (n `mod` length xs) : pick' ns xs
+main = do
+    s <- getLine
+    p <- getLine
+    putStrLn $ if elemFromRing (List.elemIndices (head p) s) s p then "Yes" else "No"
 
--- let s = "vanceknowledgetoad"
+elemFromRing :: [Int] -> String -> String -> Bool
+elemFromRing [] _  _ = False
+elemFromRing (x:xs) s p
+    | pickFromRing [x..(x + length p - 1)] s == p = True
+    | otherwise                                   = elemFromRing xs s p
 
--- elemIndices 'a' s
--- [1,16]
-
--- pick' [1..19] s
--- "anceknowledgetoadva"
--- pick' [1..7] s
--- "ancekno"
--- pick' [16..22] s
--- "advance"
+pickFromRing :: [Int] -> String -> String
+pickFromRing [] _ = []
+pickFromRing (n:ns) xs = xs !! (n `mod` length xs) : pickFromRing ns xs
