@@ -11,12 +11,13 @@
 -- output:
 -- 3
 
-import qualified Data.List as List
+import Control.Applicative ((<$>))
+import qualified Data.Char as Char
 
--- let w="computer"; t="Nurtures computer scientists and highly-skilled computer engineers who will create and exploit \"knowledge\" for the new era. Provides an outstanding computer environment."
---
--- filter (isPrefixOf w) (tails t)
--- ["computer scientists and highly-skilled computer engineers who will create and exploit \"knowledge\" for the new era. Provides an outstanding computer environment.","computer engineers who will create and exploit \"knowledge\" for the new era. Provides an outstanding computer environment.","computer environment."]
---
--- length $ filter (isPrefixOf w) (tails t)
--- 3
+main = do
+    w <- getLine
+    t <- getContents
+    print $ length $ findWord w t
+
+findWord :: String -> String -> [String]
+findWord w t = filter (\x -> w == (Char.toLower <$> x)) $ concat $ words <$> lines t
