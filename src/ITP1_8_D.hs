@@ -15,7 +15,7 @@
 -- output2:
 -- No
 
-import qualified Data.List as List
+import qualified Data.List as List (elemIndices)
 
 main = do
     s <- getLine

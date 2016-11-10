@@ -12,7 +12,7 @@
 -- 3
 
 import Control.Applicative ((<$>))
-import qualified Data.Char as Char
+import qualified Data.Char as Char (toLower)
 
 main = do
     w <- getLine
