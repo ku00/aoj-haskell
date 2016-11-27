@@ -7,13 +7,13 @@
 -- output:
 -- Fair, later, occasionally cloudy.
 
-import qualified Data.Char as Char
+import qualified Data.Char as Char (isUpper, isLower, toUpper, toLower)
 
 main = putStrLn . toggleCases =<< getLine
 
 toggleCases :: String -> String
 toggleCases [] = []
 toggleCases (x:xs)
-    | x `elem` ['a'..'z'] = Char.toUpper x : toggleCases xs
-    | x `elem` ['A'..'Z'] = Char.toLower x : toggleCases xs
-    | otherwise           = x : toggleCases xs
+    | Char.isLower x = Char.toUpper x : toggleCases xs
+    | Char.isUpper x = Char.toLower x : toggleCases xs
+    | otherwise      = x : toggleCases xs
